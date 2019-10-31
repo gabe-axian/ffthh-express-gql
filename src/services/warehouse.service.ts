@@ -9,6 +9,10 @@ class WarehouseService {
   async getStockItems(count: number) {
     return this._repo.getStockItems(count);
   }
+
+  async getStockItem(id: number) {
+    return this._repo.getStockItem(id);
+  }
 }
 
 export default WarehouseService;

@@ -35,18 +35,22 @@ class App {
     const whsSvc = new WarehouseService();
     const appSvc = new ApplicationService();
     const routeMap = `<html>
-    ROUTES
-    <a href='/application/people' >people: "/application/people"</a><br />
-    <a href='/purchasing/po' >purchaseOrders: "/purchasing/po"</a><br />
-    <a href='/sales/order' >salesOrders: "/sales/order"</a><br />
-    <a href='/warehouse/stockItem' >stockItems: "/warehouse/stockItem"</a><br />
+    ROUTES<br />
+    <a href='/application/people' >top 10 people: "/application/people"</a><br />
+    <a href='/purchasing/po' >top 10 purchaseOrders: "/purchasing/po"</a><br />
+    <a href='/sales/order' >top 10 salesOrders: "/sales/order"</a><br />
+    <a href='/warehouse/stockItem' >top 10 stockItems: "/warehouse/stockItem"</a><br />
     </html>`;
     // Regular routes
     this.app.get('/', async (req, res) => res.send( `<html><pre>${routeMap}</pre></html>`));
     this.app.get('/application/people', async (req, res) => res.send(await appSvc.getPeople(10)));
+    this.app.get('/application/people/1', async (req, res) => res.send(await appSvc.getPerson(1)));
     this.app.get('/purchasing/po', async (req, res) => res.send(await purchSvc.getPurchaseOrders(10)));
+    this.app.get('/purchasing/po/1', async (req, res) => res.send(await purchSvc.getPurchaseOrder(1)));
     this.app.get('/sales/order', async (req, res) => res.send(await soSvc.getSalesOrders(10)));
+    this.app.get('/sales/order/1', async (req, res) => res.send(await soSvc.getSalesOrder(1)));
     this.app.get('/warehouse/stockItem', async (req, res) => res.send(await whsSvc.getStockItems(10)));
+    this.app.get('/warehouse/stockItem/1', async (req, res) => res.send(await whsSvc.getStockItem(1)));
 
 
     // 404s

@@ -9,6 +9,10 @@ class PurchasingService {
   async getPurchaseOrders(count: number) {
     return this._repo.getPurchaseOrders(count);
   }
+
+  async getPurchaseOrder(id: number) {
+    return this._repo.getPurchaseOrder(id);
+  }
 }
 
 export default PurchasingService;
