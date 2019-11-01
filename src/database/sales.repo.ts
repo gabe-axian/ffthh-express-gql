@@ -1,6 +1,5 @@
 import BaseRepo, { IQueryParam } from "./base-repo";
 import mssql from "mssql";
-import Maybe from "graphql/tsutils/Maybe";
 
 class SalesRepo {
   constructor() {}
@@ -9,9 +8,9 @@ class SalesRepo {
     return await BaseRepo.Instance.executeQuery(`select top ${count} * from sales.orders order by lastEditedWhen desc`);
   }
 
-  async getSalesOrdersForCustomer(id: number): Promise<Maybe<any>> {
-    return await BaseRepo.Instance.executeQuery(`select * from sales.orders where customerid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
-  }
+  // async getSalesOrdersForCustomer(id: number): Promise<Maybe<any>> {
+  //   return await BaseRepo.Instance.executeQuery(`select * from sales.orders where customerid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
+  // }
 
   async getSalesOrder(id: number) {
     return await BaseRepo.Instance.executeQuery(`select * from sales.orders where orderid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
