@@ -13,6 +13,9 @@ class PurchasingRepo {
   async getPurchasOrderLine(id: number) {
     return await BaseRepo.Instance.executeQuery(`select * from purchasing.purchaseOrderLines where purchaseOrderLineId = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
+  async getPurchasOrderLineByPurchaseOrder(id: number) {
+    return await BaseRepo.Instance.executeQuery(`select * from purchasing.purchaseOrderLines where purchaseOrderId = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
+  }
   async getSupplier(id: number) {
     return await BaseRepo.Instance.executeQuery(`select * from purchasing.suppliers where supplierid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }

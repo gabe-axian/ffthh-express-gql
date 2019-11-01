@@ -9,7 +9,7 @@ class ApplicationRepo {
   }
 
   async getPerson(id: number) {
-    return await BaseRepo.Instance.executeQuery(`select * from application.people where personid = @person_id`, [{name: 'person_id', type: mssql.Int, value: id} as IQueryParam])
+    return await BaseRepo.Instance.executeQuery(`select * from application.people where personid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
 }
 
