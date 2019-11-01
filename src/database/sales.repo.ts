@@ -40,6 +40,15 @@ class SalesRepo {
   async getSalesInvoiceLineByInvoice(id: number) {
     return await BaseRepo.Instance.executeQuery(`select * from sales.salesInvoicelines where invoiceId = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
+
+  async addCustomerCategory(categoryName: string) {
+    return await BaseRepo.Instance.executeQuery(`insert into sales.CustomerCategories(CustomerCategoryName, LastEditedBy) values (@name, 1)`, [{name: 'name', type: mssql.Int, value: categoryName} as IQueryParam])
+  }
+
+  async updateCustomersCategory(customerId: number, categoryId: number) {
+    return await BaseRepo.Instance.executeQuery(`update sales.Customers set CustomerCategoryID = @categoryId where CustomerID = @customerId`, 
+      [{name: 'categoryId', type: mssql.Int, value: categoryId} as IQueryParam, {name: 'customerId', type: mssql.Int, value: customerId} as IQueryParam])
+  }
 }
 
 export default SalesRepo;
