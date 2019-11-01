@@ -46,8 +46,9 @@ class SalesRepo {
   }
 
   async updateCustomersCategory(customerId: number, categoryId: number) {
-    return await BaseRepo.Instance.executeQuery(`update sales.Customers set CustomerCategoryID = @categoryId where CustomerID = @customerId`, 
-      [{name: 'categoryId', type: mssql.Int, value: categoryId} as IQueryParam, {name: 'customerId', type: mssql.Int, value: customerId} as IQueryParam])
+    const res = await BaseRepo.Instance.executeQuery(`update sales.Customers set CustomerCategoryID = @categoryId where CustomerID = @customerId`, 
+      [{name: 'categoryId', type: mssql.Int, value: categoryId} as IQueryParam, {name: 'customerId', type: mssql.Int, value: customerId} as IQueryParam]);
+    return await this.getCustomer(customerId);
   }
 }
 

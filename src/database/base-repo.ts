@@ -40,38 +40,6 @@ private _pool: any;
     return result;
   }
 
-  // public async executeTransaction<T>(fn: (connection: any) => Promise<Maybe<T>>): Promise<Maybe<T>> {
-  //   const transaction = this._pool.transaction();
-  //   transaction.begin((err: any) => {
-  //       // ... error checks
-    
-  //       const request = new mssql.Request(transaction)
-  //       request.query('insert into mytable (mycolumn) values (12345)', (err, result) => {
-  //           // ... error checks
-    
-  //           transaction.commit(err => {
-  //               // ... error checks
-    
-  //               console.log("Transaction committed.")
-  //           })
-  //       })
-  //   })
-
-  //   const conn = await this._pool.getConnection();
-  //   try {
-  //     await conn.beginTransaction();
-  //     const result = await fn(conn);
-  //     await conn.commit();
-  //     return result;
-  //   } catch (error) {
-  //     // TODO: Implement better error logging
-  //     console.log(error);
-  //     await conn.rollback();
-  //   } finally {
-  //     conn.release();
-  //   }
-  // }
-
   public static get Instance() {
     return this._instance || (this._instance = new this());
   }
