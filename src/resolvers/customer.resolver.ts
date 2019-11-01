@@ -1,6 +1,6 @@
-import { Resolver, Query, Arg, FieldResolver, Root } from "type-graphql";
+import { Resolver, Query, Arg, FieldResolver, Root, Mutation, Int } from "type-graphql";
 import SalesRepo from "../database/sales.repo";
-import { Customer } from "../schemas/customer.schema";
+import { Customer, CustomerTypeUpdate } from "../schemas/customer.schema";
 import { Order } from "../schemas/order.schema";
 import Maybe from "graphql/tsutils/Maybe";
 
@@ -20,5 +20,10 @@ export class CustomerResolver {
   @FieldResolver(returns => [Order])
   public Orders(@Root() customer: Customer): Promise<Maybe<Order>> {
     return this._salesRepo.getSalesOrdersForCustomer(customer.CustomerID);
+  }
+
+  @Mutation(returns => Customer)
+  public updateCustomerType(@Arg('customerTypeUpdate', type => CustomerTypeUpdate) updateInfo: CustomerTypeUpdate) {
+    return this._salesRepo.updateCustomersCategory(updateInfo.CustomerID, updateInfo.CustomerTypeID);
   }
 }

@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from "type-graphql";
+import { ObjectType, Field, Int, InputType } from "type-graphql";
 
 @ObjectType()
 export class Customer {
@@ -7,4 +7,13 @@ export class Customer {
   
   @Field()
   public CustomerName: string;
+}
+
+@InputType()
+export class CustomerTypeUpdate {
+  @Field(type => Int)
+  public CustomerTypeID: number;
+
+  @Field(type => Int)
+  public CustomerID: number;
 }
