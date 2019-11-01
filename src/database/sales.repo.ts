@@ -1,5 +1,6 @@
 import BaseRepo, { IQueryParam } from "./base-repo";
 import mssql from "mssql";
+import Maybe from "graphql/tsutils/Maybe";
 
 class SalesRepo {
   constructor() {}
@@ -8,12 +9,17 @@ class SalesRepo {
     return await BaseRepo.Instance.executeQuery(`select top ${count} * from sales.orders order by lastEditedWhen desc`);
   }
 
+  async getSalesOrdersForCustomer(id: number): Promise<Maybe<any>> {
+    return await BaseRepo.Instance.executeQuery(`select * from sales.orders where customerid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
+  }
+
   async getSalesOrder(id: number) {
-    return await BaseRepo.Instance.executeQuery(`select * from sales.orders where orderid = @order_id`, [{name: 'order_id', type: mssql.Int, value: id} as IQueryParam])
+    return await BaseRepo.Instance.executeQuery(`select * from sales.orders where orderid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
 
   async getCustomer(id: number) {
-    return await BaseRepo.Instance.executeQuery(`select * from sales.customers where customerid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
+    const res = await BaseRepo.Instance.executeQuery<any[]>(`select * from sales.customers where customerid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
+    return res[0];
   }
 
   async getCustomerCategory(id: number) {
@@ -22,11 +28,17 @@ class SalesRepo {
   async getSalesOrderLine(id: number) {
     return await BaseRepo.Instance.executeQuery(`select * from sales.salesorderlines where orderlineid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
+  async getSalesOrderLinesByOrderId(id: number) {
+    return await BaseRepo.Instance.executeQuery(`select * from sales.salesorderlines where orderid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
+  }
   async getSalesInvoice(id: number) {
     return await BaseRepo.Instance.executeQuery(`select * from sales.salesInvoices where invoiceid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
   async getSalesInvoiceLine(id: number) {
     return await BaseRepo.Instance.executeQuery(`select * from sales.salesInvoicelines where invoicelineid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
+  }
+  async getSalesInvoiceLineByInvoice(id: number) {
+    return await BaseRepo.Instance.executeQuery(`select * from sales.salesInvoicelines where invoiceId = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
 }
 

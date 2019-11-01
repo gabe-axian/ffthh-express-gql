@@ -9,19 +9,23 @@ class WarehouseRepo {
   }
 
   async getStockItem(id: number) {
-    return await BaseRepo.Instance.executeQuery(`select * from warehouse.stockitems where stockitemid = @item_id`, [{name: 'item_id', type: mssql.Int, value: id} as IQueryParam])
+    return await BaseRepo.Instance.executeQuery(`select * from warehouse.stockitems where stockitemid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
 
   async getStockItemHoldings(id: number) {
-    return await BaseRepo.Instance.executeQuery(`select * from warehouse.stockitemholdings where stockitemid = @item_id`, [{name: 'item_id', type: mssql.Int, value: id} as IQueryParam])
+    return await BaseRepo.Instance.executeQuery(`select * from warehouse.stockitemholdings where stockitemholdingid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
+  }
+
+  async getStockItemHoldingsForStockItem(id: number) {
+    return await BaseRepo.Instance.executeQuery(`select * from warehouse.stockitemholdings where stockitemid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
 
   async getColor(id: number) {
-    return await BaseRepo.Instance.executeQuery(`select * from warehouse.colors where colorid = @item_id`, [{name: 'item_id', type: mssql.Int, value: id} as IQueryParam])
+    return await BaseRepo.Instance.executeQuery(`select * from warehouse.colors where colorid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
 
   async getStockGroup(id: number) {
-    return await BaseRepo.Instance.executeQuery(`select * from warehouse.stockgroups where stockgroupid = @item_id`, [{name: 'item_id', type: mssql.Int, value: id} as IQueryParam])
+    return await BaseRepo.Instance.executeQuery(`select * from warehouse.stockgroups where stockgroupid = @id`, [{name: 'id', type: mssql.Int, value: id} as IQueryParam])
   }
 }
 

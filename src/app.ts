@@ -1,9 +1,12 @@
+import "reflect-metadata";
 import express from "express";
-import SalesOrdersRepo from "./database/sales.repo";
+import graphqlHTTP from "express-graphql";
 import SalesService from "./services/sales.service";
 import PurchasingService from "./services/purchasing.service";
 import WarehouseService from "./services/warehouse.service";
 import ApplicationService from "./services/application.service";
+import { buildSchema } from "type-graphql";
+import { CustomerResolver } from "./resolvers/customer.resolver";
 
 class App {
   private _port: any;
@@ -51,7 +54,18 @@ class App {
     this.app.get('/sales/order/1', async (req, res) => res.send(await soSvc.getSalesOrder(1)));
     this.app.get('/warehouse/stockItem', async (req, res) => res.send(await whsSvc.getStockItems(10)));
     this.app.get('/warehouse/stockItem/1', async (req, res) => res.send(await whsSvc.getStockItem(1)));
-
+  
+    const schema = await buildSchema({
+      resolvers: [CustomerResolver],
+      validate: false,
+      emitSchemaFile: true
+    })
+    this.app.use(
+      graphqlHTTP({
+        schema: schema,
+        graphiql: true,
+      }),
+    );
 
     // 404s
     this.app.use((req, res) => {
